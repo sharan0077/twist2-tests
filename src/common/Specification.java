@@ -102,7 +102,7 @@ public class Specification {
                 specText.append("\n");
             }
         }
-        specText.append("\n");
+        specText.append(" \n");
         return specText.toString();
     }
 
