@@ -38,7 +38,7 @@ public class GaugeProject {
     }
 
 
-    public void addConcepts(Concept... newConcepts){
+    public void addConcepts(Concept... newConcepts) {
         for (Concept concept : newConcepts) {
             concepts.add(concept);
         }
@@ -95,15 +95,15 @@ public class GaugeProject {
 
         String specDirPath = new File(projectDir, specsDirName).getAbsolutePath();
         File conceptsDir = new File(specDirPath, conceptsDirName);
-        if(!conceptsDir.exists()) {
+        if (!conceptsDir.exists()) {
             conceptsDir.mkdir();
         }
-        File conceptFile = new File(conceptsDir,  name + ".cpt");
-        if(conceptFile.exists()){
-            throw new RuntimeException("Failed to create concept: "+name+"."+conceptFile.getAbsolutePath()+" : File already exists");
+        File conceptFile = new File(conceptsDir, name + ".cpt");
+        if (conceptFile.exists()) {
+            throw new RuntimeException("Failed to create concept: " + name + "." + conceptFile.getAbsolutePath() + " : File already exists");
         }
         Concept concept = new Concept(name);
-        for (List<String> row: steps.getRows()) {
+        for (List<String> row : steps.getRows()) {
             System.out.println(row.get(0));
             concept.addSteps(row.get(0));
             implementStep(row.get(0), row.get(1));
@@ -113,21 +113,63 @@ public class GaugeProject {
         return concept;
     }
 
-    public void implementStep(String stepText, String implementation) throws IOException {
-        StepValueExtractor.StepValue stepValue = new StepValueExtractor().getFor(stepText);
-        DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-        String className = String.format("Steps%d%s", System.nanoTime(), dateFormat.format(new Date()));
+
+    private void addImplementationAndWriteIntoJavaFile(String implementation, StringBuilder classText, String className) throws IOException {
+        classText.append(") {\n").append(implementation).append("\n}");
+        classText.append("}");
+        Util.writeToFile(Util.combinePath(getStepImplementationsDir(), className + ".java"), classText.toString());
+    }
+
+    public void implementStepWithInlineTable(String stepText, String implementation) throws IOException {
+        StepValueExtractor.StepValue stepValue = getStepValue(stepText);
+        String className = getClassName();
         StringBuilder classText = new StringBuilder();
+        classText.append("import com.thoughtworks.twist2.Table;\n");
+        createMethodStepImplementation(classText, className, stepValue);
+        getParamFormatWithTable(stepValue.paramCount, classText);
+        addImplementationAndWriteIntoJavaFile(implementation, classText, className);
+    }
+
+    public void implementStep(String stepText, String implementation) throws IOException {
+        StepValueExtractor.StepValue stepValue = getStepValue(stepText);
+        String className = getClassName();
+        StringBuilder classText = new StringBuilder();
+        createMethodStepImplementation(classText, className, stepValue);
+        getParamFormat(stepValue.paramCount, classText);
+        addImplementationAndWriteIntoJavaFile(implementation, classText, className);
+    }
+
+    private void createMethodStepImplementation(StringBuilder classText, String className, StepValueExtractor.StepValue stepValue) {
         classText.append("import com.thoughtworks.twist2.Step;\n");
         classText.append("public class ").append(className).append("{\n");
         classText.append("@Step(\"").append(stepValue.value).append("\")\n");
         classText.append("public void ").append("stepImplementation(");
-        for (int i = 0; i < stepValue.paramCount; i++) {
-            classText.append("String param").append(i).append(", ");
+    }
+
+    private void getParamFormatWithTable(int paramCount, StringBuilder classText) {
+        for (int i = 0; i < paramCount - 1; i++) {
+            classText.append("String param").append(i);
         }
-        classText.append(") {\n").append(implementation).append("\n}");
-        classText.append("}");
-        Util.writeToFile(Util.combinePath(getStepImplementationsDir(), className + ".java"), classText.toString());
+        if (paramCount > 1)
+            classText.append(",");
+        classText.append("Table").append(" table");
+    }
+
+    private void getParamFormat(int paramCount, StringBuilder classText) {
+        for (int i = 0; i < paramCount; i++) {
+            classText.append("String param").append(i);
+            if (i != paramCount - 1)
+                classText.append(", ");
+        }
+    }
+
+    private String getClassName() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+        return String.format("Steps%d%s", System.nanoTime(), dateFormat.format(new Date()));
+    }
+
+    private StepValueExtractor.StepValue getStepValue(String stepText) {
+        return new StepValueExtractor().getFor(stepText);
     }
 
     private String getStepImplementationsDir() {

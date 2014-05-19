@@ -20,7 +20,6 @@ public class ConceptExecution {
 
     @Step("Create concept <concept name> with following steps <steps table>")
     public void createConcept(String conceptName,Table steps) throws IOException {
-
         if(steps.getRows().size() == 0 ){
             throw new RuntimeException("Expected rows empty in table");
         }

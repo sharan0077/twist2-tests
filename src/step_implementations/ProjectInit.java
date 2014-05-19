@@ -68,9 +68,9 @@ public class ProjectInit {
             row1 = table.getRows().get(i).get(0);
             row2 = table.getRows().get(i + 1).get(0);
             if (!output.contains(row1))
-                fail("Console doesn't contain " + row1);
+                fail("Console doesn't contain : " + row1);
             if (!output.contains(row2))
-                fail("Console doesn't contain " + row2);
+                fail("Console doesn't contain : " + row2);
             if (output.indexOf(row1) < output.indexOf(row2))
                 output = output.replaceFirst(row1, "");
             else

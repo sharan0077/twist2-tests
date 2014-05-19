@@ -6,7 +6,7 @@ import java.util.List;
 public class Scenario {
 
     private String name;
-    ArrayList<String> steps = new ArrayList<String>();
+    List<ScenarioStep> steps = new ArrayList<ScenarioStep>();
 
     public Scenario(String name) {
         this.name = name;
@@ -16,14 +16,22 @@ public class Scenario {
         return name;
     }
 
-    public List<String> getSteps() {
+    public List<ScenarioStep> getSteps() {
         return steps;
     }
 
-    public void addSteps(String... newSteps) {
-        for (String step : newSteps) {
-            steps.add(step);
+    public void addSteps(ScenarioStep... newScenarioSteps) {
+        for (ScenarioStep scenarioStep : newScenarioSteps) {
+            steps.add(scenarioStep);
         }
+    }
+
+    public ScenarioStep findStep(String stepName){
+        for (ScenarioStep scenarioStep : steps) {
+            if(scenarioStep.getName().equalsIgnoreCase(stepName))
+                return scenarioStep;
+        }
+        return null;
     }
 
 }
