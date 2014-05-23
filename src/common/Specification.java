@@ -1,6 +1,6 @@
 package common;
 
-import com.thoughtworks.twist2.Table;
+import com.thoughtworks.gauge.Table;
 
 import java.io.File;
 import java.io.IOException;
@@ -102,7 +102,7 @@ public class Specification {
                 specText.append("\n");
             }
         }
-        specText.append(" \n");
+        specText.append("\n");
         return specText.toString();
     }
 

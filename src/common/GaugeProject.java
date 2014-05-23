@@ -1,7 +1,7 @@
 package common;
 
 
-import com.thoughtworks.twist2.Table;
+import com.thoughtworks.gauge.Table;
 import org.apache.commons.io.IOUtils;
 
 import java.io.File;
@@ -22,7 +22,7 @@ public class GaugeProject {
     private static String stepImplementationsDir = "src/test/java";
     private ArrayList<Concept> concepts = new ArrayList<Concept>();
 
-    private File projectDir;
+    private static File projectDir;
     private String language;
     private Process lastProcess = null;
     private ArrayList<Specification> specifications = new ArrayList<Specification>();
@@ -65,7 +65,7 @@ public class GaugeProject {
         return lastProcessStderr;
     }
 
-    public File getProjectDir() {
+    public static File getProjectDir() {
         return projectDir;
     }
 
@@ -209,4 +209,5 @@ public class GaugeProject {
             }
         }
     }
+
 }

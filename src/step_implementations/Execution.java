@@ -1,15 +1,11 @@
 package step_implementations;
 
-import com.thoughtworks.twist2.Step;
+import com.thoughtworks.gauge.Step;
 
 import static common.GaugeProject.currentProject;
 import static org.junit.Assert.assertTrue;
 
 public class Execution {
-
-
-    public Execution() {
-    }
 
     @Step("Execute the current project and ensure success")
     public void executeCurrentProjectAndEnsureSuccess() throws Exception {

@@ -1,6 +1,6 @@
 package common;
 
-import com.thoughtworks.twist2.Table;
+import com.thoughtworks.gauge.Table;
 
 import java.util.ArrayList;
 import java.util.List;
