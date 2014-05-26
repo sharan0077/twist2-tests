@@ -29,7 +29,7 @@ public class SpecAction {
 
         spec = currentProject.findSpecification(specName);
 
-        if(spec == null){
+        if (spec == null) {
             spec = currentProject.createSpecification(specName);
         }
 
@@ -78,9 +78,9 @@ public class SpecAction {
         if (scenario == null) {
             scenario = scenarioAction.createScenario(scenarioName);
         }
-        ScenarioStep scenarioStep = ScenarioAction.getScenarioStep(stepName,scenario);
-        StepAction.addTableToStep(scenarioStep,table);
-        ScenarioAction.addStepToScenario(scenario,scenarioStep);
+        ScenarioStep scenarioStep = ScenarioAction.getScenarioStep(stepName, scenario);
+        StepAction.addTableToStep(scenarioStep, table);
+        ScenarioAction.addStepToScenario(scenario, scenarioStep);
         spec.addScenarios(scenario);
         spec.save();
     }
@@ -97,7 +97,7 @@ public class SpecAction {
         }
 
         Scenario scenario = scenarioAction.createScenario(scenarioName);
-        ScenarioAction.addStepsToScenario(scenario,steps);
+        ScenarioAction.addStepsToScenario(scenario, steps);
         spec.addScenarios(scenario);
         spec.save();
     }
@@ -120,17 +120,17 @@ public class SpecAction {
             spec = currentProject.createSpecification(specName);
         }
         Scenario scenario = spec.findScenario(scenarioName);
-        if(scenario == null){
+        if (scenario == null) {
             scenario = ScenarioAction.createScenario(scenarioName);
         }
         ScenarioStep step = StepAction.createScenarioStep(stepName);
-        scenarioAction.addStepToScenario(scenario,step);
+        scenarioAction.addStepToScenario(scenario, step);
         spec.addScenarios(scenario);
         spec.save();
     }
 
     @Step("Create scenario <scenario> in spec <spec>")
-    public void createSpecWithScenario(String specName,String scenarioName) throws IOException {
+    public void createSpecWithScenario(String specName, String scenarioName) throws IOException {
         spec = currentProject.findSpecification(specName);
         if (spec == null) {
             spec = currentProject.createSpecification(specName);
@@ -141,18 +141,18 @@ public class SpecAction {
     }
 
     @Step("Create step <step> with implementation <implementation> in scenario <scenario> in spec <spec>")
-    public void createStepWithFollowingSpec(String stepName,String implementation,String scenarioName,String specName) throws IOException {
+    public void createStepWithFollowingSpec(String stepName, String implementation, String scenarioName, String specName) throws IOException {
         spec = currentProject.findSpecification(specName);
         if (spec == null) {
             spec = currentProject.createSpecification(specName);
         }
         Scenario scenario = spec.findScenario(scenarioName);
-        if(scenario == null){
+        if (scenario == null) {
             scenario = ScenarioAction.createScenario(scenarioName);
         }
         ScenarioStep step = StepAction.createScenarioStep(stepName);
-        stepAction.implementStep(stepName,implementation);
-        scenarioAction.addStepToScenario(scenario,step);
+        stepAction.implementStep(stepName, implementation);
+        scenarioAction.addStepToScenario(scenario, step);
         spec.addScenarios(scenario);
         spec.save();
     }

@@ -82,15 +82,15 @@ public class Specification {
     public String toString() {
         StringBuilder specText = new StringBuilder();
         specText.append("# ").append(name).append("\n\n");
-        if(dataTable != null)
+        if (dataTable != null)
             specText.append(getTableAsString(dataTable)).append("\n");
-        if(contextSteps.size() != 0){
+        if (contextSteps.size() != 0) {
             for (ScenarioStep contextStep : contextSteps) {
                 specText.append("* ").append(contextStep.getName()).append("\n");
             }
             specText.append("\n");
         }
-        if(scenarios.size() != 0){
+        if (scenarios.size() != 0) {
             for (Scenario scenario : scenarios) {
                 specText.append("## ").append(scenario.getName()).append("\n\n");
                 for (ScenarioStep step : scenario.getSteps()) {

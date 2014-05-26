@@ -16,12 +16,12 @@ import java.util.Date;
 
 public class StepAction {
 
-    public static ScenarioStep createScenarioStep(String scenarioStepName){
+    public static ScenarioStep createScenarioStep(String scenarioStepName) {
         ScenarioStep scenarioStep = new ScenarioStep(scenarioStepName);
         return scenarioStep;
     }
 
-    public static void addTableToStep(ScenarioStep step,Table table){
+    public static void addTableToStep(ScenarioStep step, Table table) {
         step.setTable(table);
     }
 

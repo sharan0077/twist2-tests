@@ -19,7 +19,7 @@ public class ScenarioStep {
         return name;
     }
 
-    public void setTable(Table table){
+    public void setTable(Table table) {
         this.table = table;
     }
 

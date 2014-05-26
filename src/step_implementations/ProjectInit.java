@@ -63,7 +63,6 @@ public class ProjectInit {
     @Step("Console should contain following lines in order <console output table>")
     public void consoleShouldContainFollowingLinesInOrder(Table table) throws IOException {
         String output = currentProject.getStdOut();
-        System.out.println("output :"+output);
         String row1, row2;
         for (int i = 0; i < table.getRows().size() - 1; i++) {
             row1 = table.getRows().get(i).get(0);

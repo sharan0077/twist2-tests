@@ -26,9 +26,9 @@ public class Scenario {
         }
     }
 
-    public ScenarioStep findStep(String stepName){
+    public ScenarioStep findStep(String stepName) {
         for (ScenarioStep scenarioStep : steps) {
-            if(scenarioStep.getName().equalsIgnoreCase(stepName))
+            if (scenarioStep.getName().equalsIgnoreCase(stepName))
                 return scenarioStep;
         }
         return null;
