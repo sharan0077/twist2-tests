@@ -129,6 +129,32 @@ public class SpecAction {
         spec.save();
     }
 
+    @Step("Create scenario <scenario> in spec <spec>")
+    public void createSpecWithScenario(String specName,String scenarioName) throws IOException {
+        spec = currentProject.findSpecification(specName);
+        if (spec == null) {
+            spec = currentProject.createSpecification(specName);
+        }
+        scenario = ScenarioAction.createScenario(scenarioName);
+        spec.addScenarios(scenario);
+        spec.save();
+    }
 
+    @Step("Create step <step> with implementation <implementation> in scenario <scenario> in spec <spec>")
+    public void createStepWithFollowingSpec(String stepName,String implementation,String scenarioName,String specName) throws IOException {
+        spec = currentProject.findSpecification(specName);
+        if (spec == null) {
+            spec = currentProject.createSpecification(specName);
+        }
+        Scenario scenario = spec.findScenario(scenarioName);
+        if(scenario == null){
+            scenario = ScenarioAction.createScenario(scenarioName);
+        }
+        ScenarioStep step = StepAction.createScenarioStep(stepName);
+        stepAction.implementStep(stepName,implementation);
+        scenarioAction.addStepToScenario(scenario,step);
+        spec.addScenarios(scenario);
+        spec.save();
+    }
 
 }

@@ -3,6 +3,7 @@ Spec execution
 
 * In an empty directory initialize a "java" project
 
+
 Basic spec execution
 --------------------
 
@@ -77,4 +78,40 @@ Steps with table as parameters
         |inside step with params : id2 2                                   |
 
 
+Inline table referencing to dynamic parameters
+----------------------------------------------
 
+* Create spec "Inline table referencing to dynamic parameters" with the following dataTable
+   | name  | category |
+   |-------|----------|
+   | apple |  fruit   |
+   |tomato |vegetable |
+* Create step "simple step" in scenario "DataTable" in spec "Inline table referencing to dynamic parameters" with inline table
+|name|  type  |
+|----|--------|
+|\\<name\\>|\\<category\\>|
+* Add implementation "System.out.println(\"inside simple step : \" + table.getRows().get(0).get(0)+\" \"+table.getRows().get(0).get(1));" to step "simple step <table>" with inline table
+* Execute the spec "Inline table referencing to dynamic parameters" and ensure success
+* Console should contain following lines in order
+        |              console output            |
+        |----------------------------------------|
+        |inside simple step : apple fruit        |
+        |inside simple step : tomato vegetable   |
+
+
+Steps with special parameters
+-----------------------------
+
+* Create scenario "special parameters" in spec "Steps with special param"
+* Create step "send email with body <file:resources/contents>" with implementation "System.out.println(\"body of email : \"+param0);" in scenario "special parameters" in spec "Steps with special param"
+* Create step "create following users <table:resources/users.csv>" in scenario "special parameter" in spec "Steps with special param"
+* Add implementation "for(int i = 0; i < 2 ; i++){ System.out.println(\" user name : \" + table.getRows().get(i).get(0));}" to step "create following users <table>" with inline table
+* Replicate file "resources/contents"
+* Replicate file "resources/users.csv"
+* Execute the spec "Steps with special param" and ensure success
+* Console should contain following lines in order
+        |                   console output                          |
+        |-----------------------------------------------------------|
+        |body of email : Hi, this is a sample email                 |
+        |user name : foo                                            |
+        |user name : fiz                                            |
