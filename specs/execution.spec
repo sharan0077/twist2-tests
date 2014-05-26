@@ -113,3 +113,4 @@ Steps with special parameters
         |body of email : Hi, this is a sample email                 |
         |user name : foo                                            |
         |user name : fiz                                            |
+    
