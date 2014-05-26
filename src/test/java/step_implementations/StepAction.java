@@ -25,7 +25,7 @@ public class StepAction {
         step.setTable(table);
     }
 
-    private void addImplementationAndWriteIntoJavaFile(String implementation, StringBuilder classText, String className) throws IOException {
+    private static void addImplementationAndWriteIntoJavaFile(String implementation, StringBuilder classText, String className) throws IOException {
         classText.append(") {\n").append(implementation).append("\n}");
         classText.append("}");
         Util.writeToFile(Util.combinePath(getStepImplementationsDir(), className + ".java"), classText.toString());
@@ -35,13 +35,13 @@ public class StepAction {
         StepValueExtractor.StepValue stepValue = getStepValue(stepText);
         String className = getClassName();
         StringBuilder classText = new StringBuilder();
-        classText.append("import com.thoughtworks.twist2.Table;\n");
+        classText.append("import com.thoughtworks.gauge.Table;\n");
         createMethodStepImplementation(classText, className, stepValue);
         getParamFormatWithTable(stepValue.paramCount, classText);
         addImplementationAndWriteIntoJavaFile(implementation, classText, className);
     }
 
-    public void implementStep(String stepText, String implementation) throws IOException {
+    public static void implementStep(String stepText, String implementation) throws IOException {
         StepValueExtractor.StepValue stepValue = getStepValue(stepText);
         String className = getClassName();
         StringBuilder classText = new StringBuilder();
@@ -50,8 +50,8 @@ public class StepAction {
         addImplementationAndWriteIntoJavaFile(implementation, classText, className);
     }
 
-    private void createMethodStepImplementation(StringBuilder classText, String className, StepValueExtractor.StepValue stepValue) {
-        classText.append("import com.thoughtworks.twist2.Step;\n");
+    private static void createMethodStepImplementation(StringBuilder classText, String className, StepValueExtractor.StepValue stepValue) {
+        classText.append("import com.thoughtworks.gauge.Step;\n");
         classText.append("public class ").append(className).append("{\n");
         classText.append("@Step(\"").append(stepValue.value).append("\")\n");
         classText.append("public void ").append("stepImplementation(");
@@ -66,7 +66,7 @@ public class StepAction {
         classText.append("Table").append(" table");
     }
 
-    private void getParamFormat(int paramCount, StringBuilder classText) {
+    private static void getParamFormat(int paramCount, StringBuilder classText) {
         for (int i = 0; i < paramCount; i++) {
             classText.append("String param").append(i);
             if (i != paramCount - 1)
@@ -74,16 +74,16 @@ public class StepAction {
         }
     }
 
-    private String getClassName() {
+    private static String getClassName() {
         DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
         return String.format("Steps%d%s", System.nanoTime(), dateFormat.format(new Date()));
     }
 
-    private StepValueExtractor.StepValue getStepValue(String stepText) {
+    private static StepValueExtractor.StepValue getStepValue(String stepText) {
         return new StepValueExtractor().getFor(stepText);
     }
 
-    private String getStepImplementationsDir() {
+    private static String getStepImplementationsDir() {
         return new File(GaugeProject.getProjectDir(), "src/test/java").getAbsolutePath();
     }
 

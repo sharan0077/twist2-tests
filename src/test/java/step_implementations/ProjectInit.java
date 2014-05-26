@@ -14,11 +14,10 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 public class ProjectInit {
-    private GaugeProject currentProject = null;
 
     @Step("In an empty directory initialize a <language> project")
     public void initializeProject(String language) throws Exception {
-        currentProject = new GaugeProject(getTempDir(), language);
+        GaugeProject currentProject = new GaugeProject(getTempDir(), language);
         currentProject.initialize();
     }
 
@@ -51,18 +50,19 @@ public class ProjectInit {
     }
 
     private String getPathRelativeToCurrentProjectDir(String path) {
-        return Util.combinePath(currentProject.getProjectDir().getAbsolutePath(), path);
+        return Util.combinePath(GaugeProject.getProjectDir().getAbsolutePath(), path);
     }
 
     @Step("Console should contain <message>")
-    public void consoleShouldContain(String message) throws IOException {
-        String output = currentProject.getStdOut();
+    public void consoleShouldContain(String message) throws IOException, InterruptedException {
+        String output = GaugeProject.getCurrentProject().getStdOut();
         assertTrue("Console don't contain '" + message + "'", output.contains(message));
     }
 
     @Step("Console should contain following lines in order <console output table>")
     public void consoleShouldContainFollowingLinesInOrder(Table table) throws IOException {
-        String output = currentProject.getStdOut();
+        String output = GaugeProject.getCurrentProject().getStdOut();
+        System.out.println("output :" + output);
         String row1, row2;
         for (int i = 0; i < table.getRows().size() - 1; i++) {
             row1 = table.getRows().get(i).get(0);

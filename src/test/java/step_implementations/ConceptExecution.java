@@ -23,7 +23,8 @@ public class ConceptExecution {
         if (steps.getRows().size() == 0) {
             throw new RuntimeException("Expected rows empty in table");
         }
-        Concept concept = currentProject.createConcept(conceptName, steps);
-        currentProject.addConcepts(concept);
+        Concept concept = ConceptAction.createConcept(conceptName, steps);
+        ConceptAction.addConcepts(concept);
     }
+
 }

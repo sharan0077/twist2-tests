@@ -8,8 +8,6 @@ import common.ScenarioStep;
 import java.io.IOException;
 import java.util.List;
 
-import static common.GaugeProject.currentProject;
-
 public class ScenarioAction {
 
     public static Scenario createScenario(String scenarioName) {
@@ -21,7 +19,7 @@ public class ScenarioAction {
         for (List<String> rows : steps.getRows()) {
             scenario.addSteps(new ScenarioStep(rows.get(0)));
             if (rows.get(1) != null && !rows.get(1).isEmpty())
-                currentProject.implementStep(rows.get(0), rows.get(1));
+                StepAction.implementStep(rows.get(0), rows.get(1));
         }
     }
 

@@ -77,7 +77,6 @@ Steps with table as parameters
         |inside step with params : id1 1                                   |
         |inside step with params : id2 2                                   |
 
-
 Inline table referencing to dynamic parameters
 ----------------------------------------------
 
@@ -97,7 +96,6 @@ Inline table referencing to dynamic parameters
         |----------------------------------------|
         |inside simple step : apple fruit        |
         |inside simple step : tomato vegetable   |
-
 
 Steps with special parameters
 -----------------------------
