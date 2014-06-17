@@ -15,6 +15,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class StepAction {
+    @Step("foo")
+    public void foo(){
+        
+    }
+
 
     public static ScenarioStep createScenarioStep(String scenarioStepName) {
         ScenarioStep scenarioStep = new ScenarioStep(scenarioStepName);
